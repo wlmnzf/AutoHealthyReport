@@ -25,12 +25,19 @@ def get_last_hs(username_text,password_text):
     options = Options()
     options.add_argument('--headless')
     options.add_argument('user-agent=%s'%HEADERS_LOGIN)
+
+    options.addArguments("start-maximized")
+    options.addArguments("enable-automation")
+    options.addArguments("--headless")
+    options.addArguments("--no-sandbox")
+    options.addArguments("--disable-infobars")
+    options.addArguments("--disable-dev-shm-usage")
+    options.addArguments("--disable-browser-side-navigation")
+    options.addArguments("--disable-gpu")
+    
     driver = webdriver.Chrome(options = options)
     # driver.set_page_load_timeout(10)
-    driver.set_preference("permissions.default.stylesheet", 2)  # css禁止
-    # driver.set_preference('browser.link.open_newwindow', 3) # 开启新的窗口标签
-    # f.set_preference("javascript.enabled", False)  不加载js
-    driver.set_preference("permissions.default.image", 2) # 不加载图片
+
     driver.get("https://user.www.gov.cn/sso/login")
 
     element = WebDriverWait(driver, 20).until(
