@@ -43,9 +43,13 @@ def get_last_hs(username_text,password_text):
     login.click()
 
 
-    sleep(3)
+    sleep(5)
     driver.get("https://bmfw.www.gov.cn/xgbdhsktjcjgcx/index.html")
-    sleep(6)
+    element = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.ID, "showname"))
+            )
+    sleep(5)
+    
     searchBtn=driver.find_element_by_id("searchBtn")
     searchBtn.click()
     sleep(3)
