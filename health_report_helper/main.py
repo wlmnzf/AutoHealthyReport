@@ -20,6 +20,15 @@ if __name__ == '__main__':
         logging.info(sys.argv[1])
         config.data = json.loads(sys.argv[1].replace("'", '"'))
     
+    config.data ={
+    'username': 'MF21140111', 
+    'password': 'Whx123456',  
+    'location': '上海市青浦区华科东路136号', 
+    'deadline': '2022-06-16',
+    'hs_username':'15216678452',
+    'hs_password':'Whx#2202',
+    'none':'none' 
+    }
 
     if utils.get_GMT8_timestamp() > utils.str_to_timestamp(config.data['deadline'], '%Y-%m-%d'):
         logging.info("超出填报日期")
