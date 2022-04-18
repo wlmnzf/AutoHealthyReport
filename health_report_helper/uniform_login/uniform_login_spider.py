@@ -26,6 +26,7 @@ def get_last_hs(username_text,password_text):
     options.add_argument('--headless')
     options.add_argument('user-agent=%s'%HEADERS_LOGIN)
     driver = webdriver.Chrome(options = options)
+    driver.set_page_load_timeout(10)
     driver.get("https://user.www.gov.cn/sso/login")
 
     element = WebDriverWait(driver, 20).until(
@@ -49,7 +50,7 @@ def get_last_hs(username_text,password_text):
                 EC.presence_of_element_located((By.ID, "showname"))
             )
     sleep(5)
-    
+
     searchBtn=driver.find_element_by_id("searchBtn")
     searchBtn.click()
     sleep(3)
