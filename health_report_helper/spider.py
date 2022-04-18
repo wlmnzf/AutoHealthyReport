@@ -87,7 +87,7 @@ def main(config):
 
     hssj=""
     try:
-        res=get_last_hs(driver,hs_username,hs_password)
+        res=get_last_hs(hs_username,hs_password)
         hssj=res.split(":")[0]
     except Exception as e:
         logging.info("获取核酸时间失败！")

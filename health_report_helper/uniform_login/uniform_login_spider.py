@@ -21,8 +21,20 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def get_last_hs(driver,username_text,password_text):
+def get_last_hs(username_text,password_text):
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('user-agent=%s'%HEADERS_LOGIN)
+    driver = webdriver.Chrome(options = options)
     driver.get("https://user.www.gov.cn/sso/login")
+
+    element = WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.ID, "qr"))
+            )
+
+    sleep(5)
+
+
     loginname=driver.find_element_by_id("loginname")
     password=driver.find_element_by_id("password")
     login=driver.find_element_by_id("btn-login")
@@ -33,7 +45,7 @@ def get_last_hs(driver,username_text,password_text):
 
     sleep(3)
     driver.get("https://bmfw.www.gov.cn/xgbdhsktjcjgcx/index.html")
-    sleep(3)
+    sleep(6)
     searchBtn=driver.find_element_by_id("searchBtn")
     searchBtn.click()
     sleep(3)
