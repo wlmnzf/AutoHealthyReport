@@ -142,7 +142,7 @@ def getLoginCasData(url):
     """返回CAS数据和初始JSESSIONID"""
     try:
         options = Options()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('user-agent=%s'%HEADERS_LOGIN)
         driver = webdriver.Chrome(options = options)
         driver.get(url)
