@@ -26,15 +26,15 @@ def get_last_hs(username_text,password_text):
     options.add_argument('--headless')
     options.add_argument('user-agent=%s'%HEADERS_LOGIN)
 
-    options.addArguments("start-maximized")
-    options.addArguments("enable-automation")
-    options.addArguments("--headless")
-    options.addArguments("--no-sandbox")
-    options.addArguments("--disable-infobars")
-    options.addArguments("--disable-dev-shm-usage")
-    options.addArguments("--disable-browser-side-navigation")
-    options.addArguments("--disable-gpu")
-    
+    options.add_argument("start-maximized")
+    options.add_argument("enable-automation")
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-browser-side-navigation")
+    options.add_argument("--disable-gpu")
+
     driver = webdriver.Chrome(options = options)
     # driver.set_page_load_timeout(10)
 
