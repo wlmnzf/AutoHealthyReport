@@ -31,4 +31,4 @@ jobs:
         run: |
           sudo cp -p ./chrome/chromedriver /usr/bin/
           sudo chmod -R 777 /usr/bin/chromedriver
-          python health_report_helper/health-record.py
+          python health_report_helper/health-record.py "${{ secrets.DATA }}"
