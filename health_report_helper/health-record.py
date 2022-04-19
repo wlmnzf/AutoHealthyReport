@@ -199,7 +199,9 @@ def main(config):
             session.close()
             response,driver,session=login(headers,username,password,config)
             tries-=1
-            logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试")
+            logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试\n")
+            logging.info(response)
+
 
         if "账号登录" in response or not ("安全退出" in response or "个人资料" in response):
             raise Exception('登录失败!')
@@ -250,9 +252,10 @@ def main(config):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        logging.info(sys.argv[1])
-        # config.data = json.loads(sys.argv[1].replace("'", '"'))
+    # if len(sys.argv) > 1:
+    #     config.data = json.loads(sys.argv[1].replace("'", '"'))
+
+    logging.info(config.data)
     
 
     if utils.get_GMT8_timestamp() > utils.str_to_timestamp(config.data['deadline'], '%Y-%m-%d'):
