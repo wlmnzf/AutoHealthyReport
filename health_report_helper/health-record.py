@@ -26,11 +26,11 @@ import utils
 
 
 
-def baiduocr(request_url,imgbase64):
+def baiduocr(request_url,imgbase64,config):
 
-    appid = "25994502"
-    client_id = "Rw0BQxMCDDmQVKX8S7LvfOwO"
-    client_secret = "wbOh8FSzumpdcW7WkfmQtxz7LLUp4bY5"
+    appid = config["appid"]
+    client_id = config["client_id"]
+    client_secret = config["client_secret"]
 
     token_url = "https://aip.baidubce.com/oauth/2.0/token"
     host = f"{token_url}?grant_type=client_credentials&client_id={client_id}&client_secret={client_secret}"
@@ -62,8 +62,8 @@ def baiduocr(request_url,imgbase64):
         res=content["words_result"][0]["words"].strip().replace(" ","")
     return res
 
-def get_verycode(request_url,imgbase64):
-    res=baiduocr(request_url,imgbase64)
+def get_verycode(request_url,imgbase64,config):
+    res=baiduocr(request_url,imgbase64,config)
     return res
 
 def get_cookies(driver):
@@ -129,13 +129,13 @@ def decrypt(m: str, key: str) -> str:
         cipher = AES.new(key.strip().encode('utf-8'), AES.MODE_CBC, iv);
         return _unpad(cipher.decrypt(m[AES.block_size:])).decode('utf-8');
 
-def login(headers,username,password):
+def login(headers,username,password,config):
     url_login = r'https://authserver.nju.edu.cn/authserver/login'
     session = requests.Session()
 
 
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
 
     driver = webdriver.Chrome(options = options)
     driver.get(url_login)
@@ -156,7 +156,7 @@ def login(headers,username,password):
     request_url1 = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
     request_url2 = "https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting"
     
-    verycode=get_verycode(request_url1,imgbase64)
+    verycode=get_verycode(request_url1,imgbase64,config)
     if len(verycode)!=4:
         return "",driver,session
 
@@ -188,7 +188,7 @@ def main(config):
     response=""
     driver=""
     session=""
-    response,driver,session=login(headers,username,password)
+    response,driver,session=login(headers,username,password,config)
 
     tries=5
     while "账号登录" in response or not ("安全退出" in response or "个人资料" in response) and tries>=0:
@@ -237,7 +237,7 @@ def main(config):
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         logging.info(sys.argv[1])
-        config.data = json.loads(sys.argv[1].replace("'", '"'))
+        # config.data = json.loads(sys.argv[1].replace("'", '"'))
     
 
     if utils.get_GMT8_timestamp() > utils.str_to_timestamp(config.data['deadline'], '%Y-%m-%d'):
