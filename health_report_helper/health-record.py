@@ -130,9 +130,7 @@ def decrypt(m: str, key: str) -> str:
         return _unpad(cipher.decrypt(m[AES.block_size:])).decode('utf-8');
 
 def login(headers,username,password,config):
-    url_login = r'https://authserver.nju.edu.cn/authserver/login'
-    session = requests.Session()
-
+    url_login = r'https://authserver.nju.edu.cn/authserver/login?service=http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do'
 
     options = Options()
     options.add_argument('--headless')
@@ -148,7 +146,7 @@ def login(headers,username,password,config):
 
 
     # html = driver.find_element_by_xpath("//*").get_attribute("outerHTML")
-    html=driver.find_element(by=By.XPATH, value="//*").get_attribute("outerHTML")
+    # html=driver.find_element(by=By.XPATH, value="//*").get_attribute("outerHTML")
     # imgbase64=driver.find_element_by_id("captchaImg").screenshot_as_base64
     imgbase64=driver.find_element(by=By.ID, value="captchaImg").screenshot_as_base64
 
@@ -157,29 +155,44 @@ def login(headers,username,password,config):
     request_url2 = "https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting"
     
     verycode=get_verycode(request_url1,imgbase64,config)
-    # logging.info(verycode)
-    # logging.info("\n")
+ 
     if len(verycode)!=4:
-        return "",driver,session
+        driver.close()
+        return driver,"",""
 
+    loginname=driver.find_element(by=By.ID, value="username")
+    loginpassword=driver.find_element(by=By.ID, value="password")
+    captchaResponse=driver.find_element(by=By.ID, value="captchaResponse")
+    login=driver.find_element(by=By.XPATH, value="//p[@id='cpatchaDiv']/following-sibling::p[1]").find_element(by=By.TAG_NAME,value="button")
+    
+    loginname.send_keys(username)
+    loginpassword.send_keys(password)
+    captchaResponse.send_keys(verycode)
+    login.click()
+
+    # soup = BeautifulSoup(html, 'html.parser')
+    # soup.select_one("#pwdDefaultEncryptSalt").attrs['value']
+    # data_login = {
+    #     'username': username, 
+    #     'password': encryptAES(password, soup.select_one("#pwdDefaultEncryptSalt").attrs['value']),
+    #     'captchaResponse':verycode,
+    #     'lt' : soup.select_one('[name="lt"]').attrs['value'], 
+    #     'dllt' : "userNamePasswordLogin",
+    #     'execution' : soup.select_one('[name="execution"]').attrs['value'], 
+    #     '_eventId' : soup.select_one('[name="_eventId"]').attrs['value'], 
+    #     'rmShown' : soup.select_one('[name="rmShown"]').attrs['value'], 
+    # }
+
+    # response=""
+    # try:
+    #     response=session.post(url_login, data_login, headers=headers)
+    # except:
+    #     return "",driver,session
+
+    sleep(5)
+    jsontext=driver.find_element(by=By.XPATH,value="//*").text
     cookies=get_cookies(driver)
-    session.cookies.update(cookies)
-
-    soup = BeautifulSoup(html, 'html.parser')
-    soup.select_one("#pwdDefaultEncryptSalt").attrs['value']
-    data_login = {
-        'username': username, 
-        'password': encryptAES(password, soup.select_one("#pwdDefaultEncryptSalt").attrs['value']),
-        'captchaResponse':verycode,
-        'lt' : soup.select_one('[name="lt"]').attrs['value'], 
-        'dllt' : "userNamePasswordLogin",
-        'execution' : soup.select_one('[name="execution"]').attrs['value'], 
-        '_eventId' : soup.select_one('[name="_eventId"]').attrs['value'], 
-        'rmShown' : soup.select_one('[name="rmShown"]').attrs['value'], 
-    }
-
-    response=session.post(url_login, data_login, headers=headers,verify=False)
-    return response.text,driver,session
+    return driver,cookies,jsontext
 
 def main(config):
     
@@ -187,36 +200,33 @@ def main(config):
 
     username=config["username"]
     password=config["password"]
-    response=""
+    cookies=""
     driver=""
-    session=""
+    jsontext=""
 
     try:
-        response,driver,session=login(headers,username,password,config)
+        driver,cookies,jsontext=login(headers,username,password,config)
 
         tries=5
-        while "账号登录" in response or not (("auth_username" in response) or ("安全退出" in response) or ("个人资料" in response)) and tries>=0:
+        while "CURR_LOCATION" not in jsontext  and tries>=0:
             driver.quit()
-            session.close()
-            response,driver,session=login(headers,username,password,config)
+            driver,cookies,jsontext=login(headers,username,password,config)
             tries-=1
             logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试\n")
-            logging.info(response)
+            logging.info(jsontext)
 
 
-        if "账号登录" in response or not (("auth_username" in response) or ("安全退出" in response) or ("个人资料" in response)):
+        if "CURR_LOCATION" not in jsontext:
             raise Exception('登录失败!')
             logging.info("\n登录失败!")
 
-        html = BeautifulSoup(response,'html.parser')
-        Rname=html.find(name='div', attrs={'class': 'auth_username'}).find('span').find('span').string.replace("\r\n","").strip()
-        logging.info(Rname+"登陆成功\n")
+        logging.info("登陆成功\n")
     
     except Exception as e:
         logging.exception(e)
         raise e
 
-    entrys = json.loads(session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do").text)["data"];
+    entrys = json.loads(jsontext)["data"];
     lastAddr = "";
     hssj=""
     for entry in entrys:
@@ -246,6 +256,9 @@ def main(config):
 
     entry = entrys[0];
     
+    session = requests.Session()
+    session.cookies.update(cookies)
+
     if "IS_TWZC" not in entry.keys():
         wid = entry["WID"];
         res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1");
