@@ -210,10 +210,11 @@ def main(config):
         tries=5
         while "CURR_LOCATION" not in jsontext  and tries>=0:
             driver.quit()
+            tries-=1
             logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试\n")
             logging.info(jsontext)
             driver,cookies,jsontext=login(headers,username,password,config)
-            tries-=1
+            
 
 
 
