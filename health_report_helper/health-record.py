@@ -121,7 +121,7 @@ def login(headers,username,password):
 
 
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     options.add_argument('user-agent=%s'%headers["User-Agent"])
     driver = webdriver.Chrome(options = options)
     driver.get(url_login)
