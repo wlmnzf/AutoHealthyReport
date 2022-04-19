@@ -13,26 +13,15 @@ logging.basicConfig(
 )
 
 # The data you need to fill
-# data = {
-#     # fill them:
-#     'username': 'fill-it',  # 学号
-#     'password': 'fill-it',  # 密码
-#     'deadline': '2021-10-05', # 填报截止日期，超过该天则停止填报并报错到 actions，开区间
-#     'hs_username':"",
-#     'hs_password':"",
+data = {
+    # fill them:
+    'username': 'fill-it',  # 学号
+    'password': 'fill-it',  # 密码
+    'deadline': '2021-10-05', # 填报截止日期，超过该天则停止填报并报错到 actions，开区间
+    'hs_username':"",
+    'hs_password':"",
 
-#     'none': 'none'
-# }
-
-data ={
-    'username': 'MF21140111', 
-    'password': 'Whx123456',  
-    'deadline': '2022-06-16',
-    'hs_username':'15216678452',
-    'hs_password':'Whx#2202',
-    'appid':'25994502',
-    'client_id':'Rw0BQxMCDDmQVKX8S7LvfOwO',
-    'client_secret':'wbOh8FSzumpdcW7WkfmQtxz7LLUp4bY5'
+    'none': 'none'
 }
 
 # Don't edit this variables above

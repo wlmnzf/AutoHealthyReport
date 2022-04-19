@@ -228,43 +228,47 @@ def main(config):
 
     entrys = json.loads(session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do").text)["data"];
     lastAddr = "";
+    hssj=""
     for entry in entrys:
         if "CURR_LOCATION" in entry.keys() and len(entry["CURR_LOCATION"]) > 0:
             lastAddr = entry["CURR_LOCATION"];
+        if "ZJHSJCSJ" in entry.keys() and len(entry["ZJHSJCSJ"]) > 0:
+            hssj=entry["ZJHSJCSJ"]
+        if lastAddr !="" and hssj!="":
             break
 
-    print("签到地址：");
-    print(lastAddr);
-    print("\n")
+    logging.info("签到地址：");
+    logging.info(lastAddr);
+    logging.info("\n")
 
-    hssj=""
     try:
         hs_username=config["hs_username"]
         hs_password=config["hs_password"]
         res=get_last_hs(driver,hs_username,hs_password)
         hssj=res.split(":")[0]
     except:
-        hssj="2022-04-15 15"
+        logging.info("获取最新核酸时间失败，本次采用历史核酸时间！");
+        
 
-    print("上次核酸时间");
-    print(hssj+":00");
-    print("\n")
+    logging.info("上次核酸时间");
+    logging.info(hssj+":00");
+    logging.info("\n")
 
     entry = entrys[0];
     
     if "IS_TWZC" not in entry.keys():
         wid = entry["WID"];
         res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1");
-        print(json.loads(res.text)["msg"]);
+        logging.info(json.loads(res.text)["msg"]);
     else:
-        print("未执行操作");
+        logging.info("未执行操作");
 
     session.get("https://authserver.nju.edu.cn/authserver/logout");
 
 
 if __name__ == '__main__':
-    # if len(sys.argv) > 1:
-    #     config.data = json.loads(sys.argv[1].replace("'", '"'))
+    if len(sys.argv) > 1:
+        config.data = json.loads(sys.argv[1].replace("'", '"'))
 
     logging.info(config.data)
     
