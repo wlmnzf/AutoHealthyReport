@@ -157,8 +157,8 @@ def login(headers,username,password,config):
     request_url2 = "https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting"
     
     verycode=get_verycode(request_url1,imgbase64,config)
-    logging.info(verycode)
-    logging.info("\n")
+    # logging.info(verycode)
+    # logging.info("\n")
     if len(verycode)!=4:
         return "",driver,session
 
@@ -182,7 +182,18 @@ def login(headers,username,password,config):
     return response.text,driver,session
 
 def main(config):
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    headers = {
+    "Host":"ehallapp.nju.edu.cn",
+    "Connection":"keep-alive",
+    "Accept":"application/json, text/plain, */*",
+    "User-Agent":"Mozilla/5.0 (Linux; Android 6.0.1; k30pro Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36  cpdaily/8.2.15 wisedu/8.2.15",
+    "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
+    "Accept-Encoding":"gzip, deflate",
+    "Accept-Language":"zh-CN,en-US;q=0.8",
+    "X-Requested-With":"com.wisedu.cpdaily.nju",
+    }
+    
+    headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
     username=config["username"]
     password=config["password"]
@@ -194,7 +205,7 @@ def main(config):
         response,driver,session=login(headers,username,password,config)
 
         tries=5
-        while "账号登录" in response or not ("安全退出" in response or "个人资料" in response) and tries>=0:
+        while "账号登录" in response or not (("auth_username" in response) or ("安全退出" in response) or ("个人资料" in response)) and tries>=0:
             driver.quit()
             session.close()
             response,driver,session=login(headers,username,password,config)
@@ -203,7 +214,7 @@ def main(config):
             logging.info(response)
 
 
-        if "账号登录" in response or not ("安全退出" in response or "个人资料" in response):
+        if "账号登录" in response or not (("auth_username" in response) or ("安全退出" in response) or ("个人资料" in response)):
             raise Exception('登录失败!')
             logging.info("\n登录失败!")
 
