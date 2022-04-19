@@ -178,20 +178,10 @@ def login(headers,username,password,config):
         'rmShown' : soup.select_one('[name="rmShown"]').attrs['value'], 
     }
 
-    response=session.post(url_login, data_login, headers=headers)
+    response=session.post(url_login, data_login, headers=headers,verify=False)
     return response.text,driver,session
 
 def main(config):
-    headers = {
-    "Host":"ehallapp.nju.edu.cn",
-    "Connection":"keep-alive",
-    "Accept":"application/json, text/plain, */*",
-    "User-Agent":"Mozilla/5.0 (Linux; Android 6.0.1; k30pro Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36  cpdaily/8.2.15 wisedu/8.2.15",
-    "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
-    "Accept-Encoding":"gzip, deflate",
-    "Accept-Language":"zh-CN,en-US;q=0.8",
-    "X-Requested-With":"com.wisedu.cpdaily.nju",
-    }
     
     headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
