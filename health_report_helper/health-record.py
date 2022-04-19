@@ -180,7 +180,6 @@ def login(headers,username,password,config):
     return response.text,driver,session
 
 def main(config):
-    now = datetime.now();
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
     username=config["username"]
@@ -196,7 +195,14 @@ def main(config):
         session.close()
         response,driver,session=login(headers,username,password,config)
         tries-=1
+        logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试")
 
+    if "账号登录" in response or not ("安全退出" in response or "个人资料" in response):
+        logging.info("\n登录失败!")
+
+    html = BeautifulSoup(response,'lxml')
+    Rname=html.find(name='div', attrs={'class': 'auth_username'}).find('span').find('span').string.replace("\r\n","").strip()
+    logging.info(Rname+"登陆成功\n")
 
     entrys = json.loads(session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do").text)["data"];
     lastAddr = "";
@@ -248,7 +254,7 @@ if __name__ == '__main__':
     sleeptime=random.randint(1000,1500)
     print("==========================================")
     logging.info("启动时间")
-    logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
+    logging.info (utils.get_GMT8_str("%Y-%m-%d %H:%M:%S")) 
     logging.info("\n")
 
     logging.info("延时:")
@@ -257,7 +263,7 @@ if __name__ == '__main__':
     logging.info("\n")
 
     logging.info("工作时间:")
-    logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
+    logging.info (utils.get_GMT8_str("%Y-%m-%d %H:%M:%S")) 
     logging.info("\n")
 
     logging.info("当前用户:")
