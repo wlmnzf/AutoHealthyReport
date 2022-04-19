@@ -2,3 +2,4 @@ requests==2.27.1
 pycryptodome
 pycryptodomex
 selenium==4.1.3
+beautifulsoup4
