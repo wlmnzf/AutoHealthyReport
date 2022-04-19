@@ -194,7 +194,7 @@ def main(config):
     while "账号登录" in response or not ("安全退出" in response or "个人资料" in response) and tries>=0:
         driver.quit()
         session.close()
-        response,driver,session=login(headers,username,password)
+        response,driver,session=login(headers,username,password,config)
         tries-=1
 
 
@@ -247,17 +247,22 @@ if __name__ == '__main__':
     random.seed(datetime.now())
     sleeptime=random.randint(1000,1500)
     print("==========================================")
-    print("启动时间：")
-    print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
-    print("\n")
+    logging.info("启动时间")
+    logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
+    logging.info("\n")
 
-    print("延时：")
-    print(str(sleeptime)+"s")
+    logging.info("延时:")
+    logging.info(str(sleeptime)+"s")
     # time.sleep(sleeptime)
-    print("\n")
+    logging.info("\n")
 
-    print("工作时间：")
-    print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
-    print("\n")
+    logging.info("工作时间:")
+    logging.info (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
+    logging.info("\n")
+
+    logging.info("当前用户:")
+    logging.info (config.data["username"]) 
+    logging.info("\n")
+
     main(config.data);
     print("==========================================")
