@@ -157,6 +157,8 @@ def login(headers,username,password,config):
     request_url2 = "https://aip.baidubce.com/rest/2.0/ocr/v1/handwriting"
     
     verycode=get_verycode(request_url1,imgbase64,config)
+    logging.info(verycode)
+    logging.info("\n")
     if len(verycode)!=4:
         return "",driver,session
 
@@ -187,22 +189,29 @@ def main(config):
     response=""
     driver=""
     session=""
-    response,driver,session=login(headers,username,password,config)
 
-    tries=5
-    while "账号登录" in response or not ("安全退出" in response or "个人资料" in response) and tries>=0:
-        driver.quit()
-        session.close()
+    try:
         response,driver,session=login(headers,username,password,config)
-        tries-=1
-        logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试")
 
-    if "账号登录" in response or not ("安全退出" in response or "个人资料" in response):
-        logging.info("\n登录失败!")
+        tries=5
+        while "账号登录" in response or not ("安全退出" in response or "个人资料" in response) and tries>=0:
+            driver.quit()
+            session.close()
+            response,driver,session=login(headers,username,password,config)
+            tries-=1
+            logging.info("登录失败：正在进行第"+str(5-tries)+"次尝试")
 
-    html = BeautifulSoup(response,'lxml')
-    Rname=html.find(name='div', attrs={'class': 'auth_username'}).find('span').find('span').string.replace("\r\n","").strip()
-    logging.info(Rname+"登陆成功\n")
+        if "账号登录" in response or not ("安全退出" in response or "个人资料" in response):
+            raise Exception('登录失败!')
+            logging.info("\n登录失败!")
+
+        html = BeautifulSoup(response,'html.parser')
+        Rname=html.find(name='div', attrs={'class': 'auth_username'}).find('span').find('span').string.replace("\r\n","").strip()
+        logging.info(Rname+"登陆成功\n")
+    
+    except Exception as e:
+        logging.exception(e)
+        raise e
 
     entrys = json.loads(session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do").text)["data"];
     lastAddr = "";
