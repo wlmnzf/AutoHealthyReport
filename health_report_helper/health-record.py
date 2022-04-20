@@ -283,7 +283,7 @@ if __name__ == '__main__':
         exit(-1)
 
     random.seed(datetime.now())
-    sleeptime=random.randint(1000,1500)
+    sleeptime=random.randint(500,1000)
     print("==========================================")
     logging.info("启动时间")
     logging.info (utils.get_GMT8_str("%Y-%m-%d %H:%M:%S")) 
@@ -291,7 +291,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    # time.sleep(sleeptime)
+    time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")
