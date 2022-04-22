@@ -317,7 +317,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    # time.sleep(sleeptime)
+    time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")
