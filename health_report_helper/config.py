@@ -24,15 +24,17 @@ data = {
     'none': 'none'
 }
 
+
+
 # Don't edit this variables above
 HEADERS = {
     "Host":"ehallapp.nju.edu.cn",
     "Connection":"keep-alive",
     "Accept":"application/json, text/plain, */*",
-    "User-Agent":"Mozilla/5.0 (Linux; Android 6.0.1; k30pro Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36  cpdaily/8.2.15 wisedu/8.2.15",
+    "User-Agent":"User-Agent:Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
     "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
     "Accept-Encoding":"gzip, deflate",
-    "Accept-Language":"zh-CN,en-US;q=0.8",
+    "Accept-Language":"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     "X-Requested-With":"com.wisedu.cpdaily.nju",
 }
 

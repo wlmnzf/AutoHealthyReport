@@ -261,9 +261,21 @@ def main(config):
     session = requests.Session()
     session.cookies.update(cookies)
 
+    HEADERS = {
+    "Host":"ehallapp.nju.edu.cn",
+    "Connection":"keep-alive",
+    "Accept":"application/json, text/plain, */*",
+    "User-Agent":"User-Agent:Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
+    "Accept-Encoding":"gzip, deflate",
+    "Accept-Language":"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "X-Requested-With":"com.wisedu.cpdaily.nju",
+}
+
+
     if "IS_TWZC" not in entry.keys():
         wid = entry["WID"];
-        res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1");
+        res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1",headers=HEADERS);
         logging.info(json.loads(res.text)["msg"]);
     else:
         logging.info("未执行操作");
@@ -275,7 +287,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         config.data = json.loads(sys.argv[1].replace("'", '"'))
 
-    logging.info(config.data)
+    # logging.info(config.data)
     
 
     if utils.get_GMT8_timestamp() > utils.str_to_timestamp(config.data['deadline'], '%Y-%m-%d'):
