@@ -4,6 +4,7 @@ import base64
 import requests
 from Crypto.Cipher import AES
 from Crypto.Util import Padding
+from random import randint
 from bs4 import BeautifulSoup
 from time import sleep
 from datetime import datetime
@@ -265,13 +266,26 @@ def main(config):
     "Host":"ehallapp.nju.edu.cn",
     "Connection":"keep-alive",
     "Accept":"application/json, text/plain, */*",
-    "User-Agent":"User-Agent:Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    "User-Agent":"Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
     "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
     "Accept-Encoding":"gzip, deflate",
     "Accept-Language":"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     "X-Requested-With":"com.wisedu.cpdaily.nju",
 }
 
+
+
+    USER_AGENTS = [
+    "Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 (4463142912)cpdaily/9.0.14  wisedu/9.0.14",
+    "Mozilla/5.0 (Linux; Android 6.0.1; Mate 10 Pro Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.158 Mobile Safari/537.36 cpdaily/9.0.14  wisedu/9.0.14;",
+    "Mozilla/5.0 (Linux; Android 6.0.1; oppo R11s Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.158 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    "Mozilla/5.0 (Linux; Android 6.0.1; oneplus 5 Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.158 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    ]
+
+    random_agent = USER_AGENTS[randint(0, len(USER_AGENTS)-1)]
+    # random_agent = USER_AGENTS[4]
+    HEADERS["User-Agent"] = random_agent
 
     if "IS_TWZC" not in entry.keys():
         wid = entry["WID"];
@@ -303,7 +317,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    time.sleep(sleeptime)
+    # time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")
