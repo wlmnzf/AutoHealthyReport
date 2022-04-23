@@ -294,7 +294,7 @@ def main(config):
     else:
         logging.info("未执行操作");
 
-    session.get("https://authserver.nju.edu.cn/authserver/logout");
+    # session.get("https://authserver.nju.edu.cn/authserver/logout");
 
 
 if __name__ == '__main__':
