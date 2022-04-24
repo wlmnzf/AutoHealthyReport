@@ -24,6 +24,10 @@ import logging
 import config
 import utils
 
+import urllib3
+
+urllib3.disable_warnings()
+
 
 
 
@@ -287,9 +291,10 @@ def main(config):
     # random_agent = USER_AGENTS[4]
     HEADERS["User-Agent"] = random_agent
 
+    requests.packages.urllib3.disable_warnings
     if "IS_TWZC" not in entry.keys():
         wid = entry["WID"];
-        res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1",headers=HEADERS);
+        res =session.get("https://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do?WID="+wid+"&CURR_LOCATION="+lastAddr+"&ZJHSJCSJ="+hssj+"&SFZJLN=0&IS_TWZC=1&IS_HAS_JKQK=1&JRSKMYS=1&JZRJRSKMYS=1",headers=HEADERS,verify=False);
         logging.info(json.loads(res.text)["msg"]);
     else:
         logging.info("未执行操作");
