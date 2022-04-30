@@ -101,7 +101,7 @@ def get_last_hs(username_text,password_text):
     password.send_keys(password_text)
     login.click()
 
-    logging.info("axx")
+    # logging.info("axx")
     sleep(3)
     # cookies=get_cookies(driver)
     # session = requests.Session()
@@ -320,7 +320,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    # time.sleep(sleeptime)
+    time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")
