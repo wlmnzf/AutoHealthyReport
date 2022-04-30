@@ -96,7 +96,7 @@ def get_last_hs(username_text,password_text):
     password.send_keys(password_text)
     login.click()
 
-
+    logging.info("axx")
     sleep(3)
     cookies=get_cookies(driver)
     session = requests.Session()
@@ -105,10 +105,10 @@ def get_last_hs(username_text,password_text):
     try:
         driver.get("https://bmfw.www.gov.cn/xgbdhsktjcjgcx/index.html")
     except Exception:
+        logging.info("aaaa")
         driver.execute_script('window.stop()')
 
     sleep(3)
-    logging.info("aaaa")
     # searchBtn=driver.find_element_by_id("searchBtn")
     searchBtn=driver.find_element(by=By.ID, value="searchBtn")
     searchBtn.click()
