@@ -108,6 +108,7 @@ def get_last_hs(username_text,password_text):
         driver.execute_script('window.stop()')
 
     sleep(3)
+    logging.info("aaaa")
     # searchBtn=driver.find_element_by_id("searchBtn")
     searchBtn=driver.find_element(by=By.ID, value="searchBtn")
     searchBtn.click()
