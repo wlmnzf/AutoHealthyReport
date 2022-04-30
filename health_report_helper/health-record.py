@@ -249,7 +249,8 @@ def main(config):
         hs_password=config["hs_password"]
         res=get_last_hs(hs_username,hs_password)
         hssj=res.split(":")[0]
-    except:
+    except Exception as e:
+        logging.info(e)
         logging.info("获取最新核酸时间失败，本次采用历史核酸时间！");
         
 
