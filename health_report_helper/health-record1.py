@@ -27,7 +27,7 @@ import utils
 import urllib3
 
 urllib3.disable_warnings()
-
+session=""
 
 
 
@@ -135,6 +135,24 @@ def decrypt(m: str, key: str) -> str:
         return _unpad(cipher.decrypt(m[AES.block_size:])).decode('utf-8');
 
 def login(headers,username,password,config):
+    global session
+    session = requests.Session()
+    session.headers.update({
+            'User-Agent': "Mozilla/5.0 (Linux; Android 11; M2006J10C Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.141 Mobile Safari/537.36  cpdaily/8.2.7 wisedu/8.2.7})"
+        })
+
+    r = session.get(URL_NJU_UIA_AUTH)
+    lt = re.search(
+            r'<input type="hidden" name="lt" value="(.*)"/>', r.text).group(1)
+    execution = re.search(
+            r'<input type="hidden" name="execution" value="(.*)"/>', r.text).group(1)
+    eventId = re.search(
+            r'<input type="hidden" name="_eventId" value="(.*)"/>', r.text).group(1)
+    rmShown = re.search(
+            r'<input type="hidden" name="rmShown" value="(.*)"', r.text).group(1)
+    pwdDefaultEncryptSalt = re.search(
+            r'var pwdDefaultEncryptSalt = "(.*)"', r.text).group(1)
+
     url_login = r'https://authserver.nju.edu.cn/authserver/login?service=http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do'
 
     options = Options()
