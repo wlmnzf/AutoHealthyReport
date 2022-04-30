@@ -81,10 +81,10 @@ def get_cookies(driver):
 
 def get_last_hs(username_text,password_text):
     options = Options()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
 
     driver = webdriver.Chrome(options = options)
-    driver.set_page_load_timeout(15)
+    driver.set_page_load_timeout(10)
     driver.get("https://user.www.gov.cn/sso/login")
     # loginname=driver.find_element_by_id("loginname")
     loginname=driver.find_element(by=By.ID, value="loginname")
