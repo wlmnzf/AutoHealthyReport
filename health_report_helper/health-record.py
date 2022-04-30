@@ -135,6 +135,9 @@ def decrypt(m: str, key: str) -> str:
         return _unpad(cipher.decrypt(m[AES.block_size:])).decode('utf-8');
 
 def login(headers,username,password,config):
+    res=requests.get("https://authserver.nju.edu.cn/authserver/login?service=http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do")
+    logging.info(res.text)
+
     url_login = r'https://authserver.nju.edu.cn/authserver/login?service=http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do'
 
     options = Options()
@@ -322,7 +325,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    time.sleep(sleeptime)
+    # time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")
