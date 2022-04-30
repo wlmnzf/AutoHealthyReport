@@ -84,7 +84,13 @@ def get_last_hs(username_text,password_text):
     options.add_argument('--headless')
 
     driver = webdriver.Chrome(options = options)
-    driver.get("https://user.www.gov.cn/sso/login")
+    driver.set_page_load_timeout(20)
+
+    try:
+        driver.get("https://user.www.gov.cn/sso/login")
+    except Exception:
+        driver.execute_script('window.stop()')
+
     # loginname=driver.find_element_by_id("loginname")
     loginname=driver.find_element(by=By.ID, value="loginname")
     # password=driver.find_element_by_id("password")
@@ -100,11 +106,10 @@ def get_last_hs(username_text,password_text):
     # cookies=get_cookies(driver)
     # session = requests.Session()
     # session.cookies.update(cookies)
-    driver.set_page_load_timeout(10)
+
     try:
         driver.get("https://bmfw.www.gov.cn/xgbdhsktjcjgcx/index.html")
     except Exception:
-        logging.info("aaaa")
         driver.execute_script('window.stop()')
 
     sleep(3)
