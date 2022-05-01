@@ -16,7 +16,7 @@
 
 ### 1. 本项目
 
-修改自项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-NjuHealthReport) (Star 自然是更好)
+修改自项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-NjuHealthReport)
 以及项目:[NJU-health-report](https://github.com/kottory/NJU-health-report)
 
 ### 2. 准备需要的参数
