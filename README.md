@@ -62,8 +62,8 @@
   // .....
   - name: Run Spider
         run: |
-          python health_report_helper/main.py "${{ secrets.DATA }}"
-          python health_report_helper/main.py "${{ secrets.DATA2 }}"
+          python health_report_helper/health-record.py "${{ secrets.DATA }}"
+          python health_report_helper/health-record.py "${{ secrets.DATA2 }}"
 ```
 
 # License
