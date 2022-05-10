@@ -248,7 +248,6 @@ def main(config):
     "Connection":"keep-alive",
     "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "User-Agent":"Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
-    "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
     "Accept-Encoding":"gzip, deflate, br",
     "Accept-Language":"zh-CN,zh;q=0.9",
     "X-Requested-With":"com.wisedu.cpdaily.nju",
