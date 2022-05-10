@@ -1,3 +1,4 @@
+from email import header
 import json
 import random
 import base64
@@ -200,13 +201,38 @@ def login(headers,username,password,config):
             'rmShown': rmShown,
             'captchaResponse': verycode
         }
+    # session.headers.update(headers)
     r = session.post(url_login, data=data)
     return r.text
     
 
 def main(config):
     
-    headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    # headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+
+    headers = {
+    "Host":"authserver.nju.edu.cn",
+    "Connection":"keep-alive",
+    "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "User-Agent":"Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15;",
+    "Referer":"http://ehallapp.nju.edu.cn/xgfw/sys/mrjkdkappnju/index.html",
+    "Accept-Encoding":"gzip, deflate, br",
+    "Accept-Language":"zh-CN,zh;q=0.9",
+    "X-Requested-With":"com.wisedu.cpdaily.nju",
+    "Cache-Control":"max-age=0",
+    "Content-Type":"application/x-www-form-urlencoded",
+    "Origin":"https://authserver.nju.edu.cn",
+    "Referer":"https://authserver.nju.edu.cn/authserver/login?service=http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do",
+    "sec-ch-ua":'" Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"',
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":'"Linux"',
+    "Sec-Fetch-Dest":"document",
+    "Sec-Fetch-Mode":"navigate",
+    "Sec-Fetch-Site":"same-origin",
+    "Sec-Fetch-User":"?1",
+    "Upgrade-Insecure-Requests":"1",
+    "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+}
 
     username=config["username"]
     password=config["password"]
