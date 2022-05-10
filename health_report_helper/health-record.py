@@ -198,8 +198,7 @@ def login(headers,username,password,config):
             'execution': execution,
             '_eventId': eventId,
             'rmShown': rmShown,
-            'captchaResponse': verycode,
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit 537.36 (KHTML, like Gecko) Chrome"
+            'captchaResponse': verycode
         }
     r = session.post(url_login, data=data)
     return r.text
@@ -320,7 +319,7 @@ if __name__ == '__main__':
 
     logging.info("延时:")
     logging.info(str(sleeptime)+"s")
-    time.sleep(sleeptime)
+    # time.sleep(sleeptime)
     logging.info("\n")
 
     logging.info("工作时间:")

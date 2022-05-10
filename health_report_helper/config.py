@@ -24,8 +24,16 @@ data = {
     'none': 'none'
 }
 
-
-
+data ={
+    'username': 'DG20330027', 
+    'password': 'wlm94929',  
+    'deadline': '2022-06-16',
+    'hs_username':'15600818233',
+    'hs_password':'wlm94929',
+    'appid':'25994502',
+    'client_id':'Rw0BQxMCDDmQVKX8S7LvfOwO',
+    'client_secret':'wbOh8FSzumpdcW7WkfmQtxz7LLUp4bY5'
+}
 # Don't edit this variables above
 HEADERS = {
     "Host":"ehallapp.nju.edu.cn",
