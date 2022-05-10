@@ -4,7 +4,7 @@
 
 ## 简介
 
-每天 17:00, 19:00 GMT+8 触发任务，并延迟随机时间后完成健康填报。如想修改定时运行的时间，可修改 `.github/workflows/healthReport.yml` 中 `schedule` 属性。
+每天 12:00, 19:00 GMT+8 触发任务，并延迟随机时间后完成健康填报。如想修改定时运行的时间，可修改 `.github/workflows/healthReport.yml` 中 `schedule` 属性。
 
 请先手动在 App 填报一次，之后将默认取昨天的地址进行填报。
 
@@ -14,9 +14,10 @@
 
 ## Github Actions 启用步骤
 
-### 1. Fork 本项目
+### 1. 本项目
 
-Fork 本项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-NjuHealthReport) (Star 自然是更好)
+修改自项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-NjuHealthReport)
+以及项目:[NJU-health-report](https://github.com/kottory/NJU-health-report)
 
 ### 2. 准备需要的参数
 
@@ -26,8 +27,11 @@ Fork 本项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-
     'username': '学号', # 把单引号内的 "学号" 改成自己的学号
     'password': '密码', # 把单引号内的 "密码" 改成自己的统一认证密码
     'deadline': '2021-10-05', # 这里填报截止日期（开区间），超过该天则停止填报并报错
-
-    'none': 'none'
+    'hs_username':'核酸账号', #中华人民共和国中央人民政府网站注册账号，用于查询核酸
+    'hs_password':'核酸密码',
+    'appid':'百度ocr appid',
+    'client_id':'百度ocr client_id',
+    'client_secret':'百度ocr client_secret'
 }
 ```
 
@@ -58,8 +62,8 @@ Fork 本项目: [actions-NjuHealthReport](https://github.com/zhangt2333/actions-
   // .....
   - name: Run Spider
         run: |
-          python health_report_helper/main.py "${{ secrets.DATA }}"
-          python health_report_helper/main.py "${{ secrets.DATA2 }}"
+          python health_report_helper/health-record.py "${{ secrets.DATA }}"
+          python health_report_helper/health-record.py "${{ secrets.DATA2 }}"
 ```
 
 # License
