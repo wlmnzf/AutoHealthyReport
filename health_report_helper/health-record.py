@@ -201,7 +201,7 @@ def login(headers,username,password,config):
             'rmShown': rmShown,
             'captchaResponse': verycode
         }
-    # session.headers.update(headers)
+    session.headers.update(headers)
     r = session.post(url_login, data=data)
     return r.text
     
@@ -234,6 +234,13 @@ def main(config):
     "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
 }
 
+    headers = {
+    "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding":"gzip, deflate",
+    "Accept-Language":"zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "User-Agent":"Mozilla/5.0 (Linux; Android 10; BMH-AN20 Build/HUAWEIBMH-AN20; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.93 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15",
+    "X-Requested-With":"com.wisedu.cpdaily.nju"
+}
     username=config["username"]
     password=config["password"]
 
