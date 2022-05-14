@@ -211,6 +211,7 @@ def login(headers,username,password,config):
 
     
     headers = {
+        "Connection":"keep-alive",
 		'User-Agent': "Mozilla/5.0 (Linux; Android 12; M2007J1SC Build/SKQ1.220213.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.127 Mobile Safari/537.36 cpdaily/9.0.15 wisedu/9.0.15",
 		'Origin': "https://authserver.nju.edu.cn",
 		'Referer': url_login,
